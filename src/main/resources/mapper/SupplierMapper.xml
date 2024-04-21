@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.carsale.mapper.SupplierMapper">
+
+    <resultMap id="BaseResultMap" type="com.carsale.pojo.Supplier">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="phone" column="phone" jdbcType="VARCHAR"/>
+            <result property="company" column="company" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,phone,
+        company
+    </sql>
+
+    <select id="selectSupplierById" resultType="com.carsale.pojo.Supplier">
+        select *
+        from supplier
+        where supplier.id = #{supplierId}
+    </select>
+</mapper>

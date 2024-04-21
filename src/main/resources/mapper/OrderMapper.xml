@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.carsale.mapper.OrderMapper">
+
+    <resultMap id="BaseResultMap" type="com.carsale.pojo.Order">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="productid" column="productId" jdbcType="INTEGER"/>
+            <result property="userid" column="userId" jdbcType="INTEGER"/>
+            <result property="warehouseid" column="warehouseId" jdbcType="INTEGER"/>
+            <result property="createtime" column="createtime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,productId,userId,
+        warehouseId,createtime
+    </sql>
+
+    <delete id="deleteOrderByProductId">
+        delete
+        from `order`
+        where `order`.productId = #{productId}
+
+    </delete>
+
+    <delete id="deleteOrderByWarehouseId">
+        delete
+        from `order`
+        where `order`.warehouseId = #{warehouseId}
+    </delete>
+
+    <!-- 获取订单总数 -->
+    <select id="selectOrderCount" resultType="java.lang.Long">
+        SELECT COUNT(*) FROM `order`;
+    </select>
+
+    <!-- 分页查询订单列表 -->
+    <select id="selectOrderPage" resultMap="BaseResultMap">
+        SELECT * FROM `order`
+                          LIMIT #{page}, #{pageSize};
+    </select>
+
+</mapper>

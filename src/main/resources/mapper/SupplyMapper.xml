@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.carsale.mapper.SupplyMapper">
+
+    <resultMap id="BaseResultMap" type="com.carsale.pojo.Supply">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="quantity" column="quantity" jdbcType="INTEGER"/>
+            <result property="supplierid" column="supplierId" jdbcType="INTEGER"/>
+            <result property="productid" column="productId" jdbcType="INTEGER"/>
+            <result property="warehouseid" column="warehouseId" jdbcType="INTEGER"/>
+            <result property="createtime" column="createtime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,quantity,supplierId,
+        productId,warehouseId,createtime
+    </sql>
+
+    <delete id="deleteSupplyByProductId">
+        delete
+        from supply
+        where supply.productId = #{productId}
+    </delete>
+
+    <delete id="deleteSupplyBySupplierId">
+        delete
+        from supply
+        where supply.supplierId = #{supplierId}
+    </delete>
+
+    <delete id="deleteSupplyByWarehouseId">
+        delete
+        from supply
+        where supply.warehouseId = #{warehouseId}
+    </delete>
+
+</mapper>

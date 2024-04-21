@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.carsale.mapper.WarehouseMapper">
+
+    <resultMap id="BaseResultMap" type="com.carsale.pojo.Warehouse">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="location" column="location" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,location
+    </sql>
+
+    <select id="selectWarehouseByProductId" resultType="com.carsale.pojo.Warehouse">
+        SELECT warehouse.id,warehouse.location
+        FROM warehouse
+        WHERE warehouse.id IN (SELECT DISTINCT warehouseId
+                               FROM inventory
+                               WHERE productId = #{productId})
+    </select>
+
+    <select id="selectWarehouseAndInventoryById" resultType="com.carsale.pojo.Product">
+        select product.id,product.name,product.model
+        from product
+        where product.id IN (select DISTINCT productId
+                             from inventory
+                             where warehouseId = #{warehouseId})
+    </select>
+
+    <select id="selectWarehouseById" resultType="com.carsale.pojo.Warehouse">
+        select *
+        from warehouse
+        where warehouse.id = #{warehouseId}
+    </select>
+</mapper>
