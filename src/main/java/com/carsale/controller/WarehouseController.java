@@ -17,7 +17,7 @@ public class WarehouseController {
 
     @PreAuthorize("hasAnyAuthority('ROOT','ADMIN','USER')")
     @PostMapping("")
-    public Result createWarehouse(String location){
+    public Result createWarehouse(@RequestBody String location){
         Result result = warehouseService.createWarehouse(location);
         return result;
     }
@@ -38,7 +38,7 @@ public class WarehouseController {
 
     @PreAuthorize("hasAnyAuthority('ROOT','ADMIN','USER')")
     @PatchMapping("{id}")
-    public Result UpdateWarehouseById(@PathVariable Integer id, String location){
+    public Result UpdateWarehouseById(@PathVariable Integer id, @RequestBody String location){
         Result result = warehouseService.UpdateWarehouseById(id,location);
         return result;
     }

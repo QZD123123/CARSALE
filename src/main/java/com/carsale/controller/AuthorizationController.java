@@ -17,23 +17,20 @@ import org.springframework.web.bind.annotation.*;
 public class AuthorizationController {
 
     @Autowired
-    private JwtHelper jwtHelper;
-
-    @Autowired
     private UserService userService;
 
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("register")
-    public Result register(User user){
+    public Result register(@RequestBody User user){
         Result result = userService.register(user);
         return result;
     }
 
     @PostMapping("login")
-    public Result login(User user){
+    public Result login(@RequestBody User user){
+        System.out.println("result = " + user);
         Result result = userService.login(user);
-        System.out.println("result = " + result);
         return result;
     }
 

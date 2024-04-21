@@ -17,7 +17,7 @@ public class SupplierController {
 
     @PreAuthorize("hasAnyAuthority('ROOT','ADMIN','USER')")
     @PostMapping("")
-    public Result createSupplier(String name, String phone, String company){
+    public Result createSupplier(@RequestBody String name, String phone, String company){
         Result result = supplierService.createSupplier(name,phone,company);
         return result;
     }
@@ -38,7 +38,7 @@ public class SupplierController {
 
     @PreAuthorize("hasAnyAuthority('ROOT','ADMIN','USER')")
     @PatchMapping("{id}")
-    public Result UpdateSupplierById(@PathVariable Integer id, String name, String phone, String company){
+    public Result UpdateSupplierById(@PathVariable Integer id, @RequestBody String name, String phone, String company){
         Result result = supplierService.UpdateSupplierById(id,name,phone,company);
         return result;
     }

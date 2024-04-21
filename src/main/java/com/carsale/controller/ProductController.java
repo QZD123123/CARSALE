@@ -17,7 +17,7 @@ public class ProductController {
 
     @PreAuthorize("hasAnyAuthority('USER','ADMIN','ROOT')")
     @PostMapping("")
-    public Result createProduct(String name, String model, Double price ,String introduce){
+    public Result createProduct(@RequestBody String name, String model, Double price ,String introduce){
         Result result = productService.createProduct(name,model,price,introduce);
         return result;
     }
@@ -38,7 +38,7 @@ public class ProductController {
 
     @PreAuthorize("hasAnyAuthority('USER','ADMIN','ROOT')")
     @PatchMapping("{id}")
-    public Result UpdateProductById(@PathVariable Integer id, String name, String model, Double price, String introduce){
+    public Result UpdateProductById(@PathVariable Integer id, @RequestBody String name, String model, Double price, String introduce){
         Result result = productService.UpdateProductById(id,name,model,price,introduce);
         return result;
     }

@@ -31,7 +31,7 @@ public class UserController {
     }
 
     @PatchMapping("{id}")
-    public Result updateUserById(@PathVariable Integer id, User user){
+    public Result updateUserById(@PathVariable Integer id, @RequestBody User user){
         Result result = userService.updateUserById(id,user);
         return result;
     }

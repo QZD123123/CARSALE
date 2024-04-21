@@ -33,14 +33,14 @@ public class OrderController {
 
     @PreAuthorize("hasAnyAuthority('ROOT','ADMIN','USER')")
     @PatchMapping("{id}")
-    public Result UpdateOrderById(@PathVariable Integer id, Integer productId, Integer userId, Integer warehouseId){
+    public Result UpdateOrderById(@PathVariable Integer id,@RequestBody Integer productId, Integer userId, Integer warehouseId){
         Result result = orderService.UpdateOrderById(id,productId,userId,warehouseId);
         return result;
     }
 
     @PreAuthorize("hasAnyAuthority('ROOT','ADMIN','USER')")
     @PostMapping("")
-    public Result createOrder(Integer productId, Integer userId, Integer warehouseId){
+    public Result createOrder(@RequestBody Integer productId, Integer userId, Integer warehouseId){
         Result result = orderService.createOrder(productId,userId,warehouseId);
         return result;
     }

@@ -17,7 +17,7 @@ public class SupplyController {
 
     @PreAuthorize("hasAnyAuthority('ROOT','ADMIN','USER')")
     @PostMapping("")
-    public Result createSupply(Integer quantity, Integer supplierId, Integer productId, Integer warehouseId){
+    public Result createSupply(@RequestBody Integer quantity, Integer supplierId, Integer productId, Integer warehouseId){
         Result result = supplyService.createSupply(quantity,supplierId,productId,warehouseId);
         return result;
     }
@@ -38,7 +38,7 @@ public class SupplyController {
 
     @PreAuthorize("hasAnyAuthority('ROOT','ADMIN','USER')")
     @PatchMapping("{id}")
-    public Result UpdateSupplyById(@PathVariable Integer id, Supply supply){
+    public Result UpdateSupplyById(@PathVariable Integer id, @RequestBody Supply supply){
         Result result = supplyService.UpdateSupplyById(id,supply);
         return result;
     }
