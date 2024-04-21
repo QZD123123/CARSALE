@@ -3,6 +3,7 @@ package com.carsale.service;
 import com.carsale.pojo.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.carsale.utils.Result;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
 * @author ASUS
@@ -16,7 +17,7 @@ public interface UserService extends IService<User> {
 
     Result login(User user);
 
-    Result AutoLogin(String token);
+    Result AutoLogin(HttpServletRequest request);
 
     Result userPageSelect(Integer page, Integer pageSize);
 
@@ -27,4 +28,6 @@ public interface UserService extends IService<User> {
     Result updateAvatar(Integer id, User user);
 
     Result deleteUser(Integer id);
+
+
 }

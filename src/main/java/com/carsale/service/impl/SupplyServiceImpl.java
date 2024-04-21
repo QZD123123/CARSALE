@@ -8,6 +8,7 @@ import com.carsale.mapper.SupplierMapper;
 import com.carsale.mapper.WarehouseMapper;
 import com.carsale.pojo.Supplier;
 import com.carsale.pojo.Supply;
+import com.carsale.response.deleteSupplyResponse;
 import com.carsale.response.supplyResponse;
 import com.carsale.service.SupplyService;
 import com.carsale.mapper.SupplyMapper;
@@ -54,7 +55,7 @@ public class SupplyServiceImpl extends ServiceImpl<SupplyMapper, Supply>
 
         Map data = new LinkedHashMap();
         data.put("tip","成功创建供应记录");
-        data.put("supply",supply);
+        data.put("supply",new deleteSupplyResponse(supply));
 
         return Result.ok(data);
     }
@@ -121,7 +122,7 @@ public class SupplyServiceImpl extends ServiceImpl<SupplyMapper, Supply>
 
         Map data = new LinkedHashMap();
         data.put("tip","成功修改供应记录");
-        data.put("supply",dbSupply);
+        data.put("supply",new deleteSupplyResponse(dbSupply));
 
         return Result.ok(data);
     }
@@ -129,11 +130,12 @@ public class SupplyServiceImpl extends ServiceImpl<SupplyMapper, Supply>
     @Override
     public Result deleteSupplyById(Integer id) {
         Supply supply = supplyMapper.selectById(id);
+        deleteSupplyResponse deleteSupplyResponse = new deleteSupplyResponse(supply);
         supplyMapper.deleteById(id);
 
         Map data = new LinkedHashMap();
         data.put("tip","成功删除供应记录");
-        data.put("result",supply);
+        data.put("result",deleteSupplyResponse);
 
         return Result.ok(data);
     }

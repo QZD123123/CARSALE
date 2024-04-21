@@ -8,12 +8,11 @@ import com.carsale.mapper.UserMapper;
 import com.carsale.mapper.WarehouseMapper;
 import com.carsale.pojo.Order;
 import com.carsale.pojo.Supplier;
-import com.carsale.response.autoLoginResponse;
-import com.carsale.response.orderResponse;
-import com.carsale.response.supplyResponse;
+import com.carsale.response.*;
 import com.carsale.service.OrderService;
 import com.carsale.mapper.OrderMapper;
 import com.carsale.utils.Result;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,7 +58,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order>
             orderResponse.setUser(new autoLoginResponse(userMapper.selectById(record.getUserid())));
             orderResponse.setWarehouse(warehouseMapper.selectWarehouseById(record.getWarehouseid()));
 
-
             list.add(orderResponse);
         }
 
@@ -70,6 +68,72 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order>
         data.put("pageTotal",(int)Math.ceil(count/pageSize));
         data.put("orderTotal",count);
         data.put("orderList",list);
+
+        return Result.ok(data);
+    }
+
+    @Override
+    public Result selectOrderById(Integer id) {
+        Order order = orderMapper.selectOrderById(id);
+        orderResponse orderResponse = new orderResponse();
+
+        orderResponse.setId(order.getId());
+        orderResponse.setProduct(productMapper.selectById(order.getProductid()));
+        orderResponse.setUser(new autoLoginResponse(userMapper.selectById(order.getUserid())));
+        orderResponse.setWarehouse(warehouseMapper.selectWarehouseById(order.getWarehouseid()));
+
+        Map data = new LinkedHashMap();
+        data.put("tip","成功获取订单");
+        data.put("id",id);
+        data.put("product",orderResponse.getProduct());
+        data.put("user",orderResponse.getUser());
+        data.put("warehouse",orderResponse.getWarehouse());
+
+        return Result.ok(data);
+    }
+
+    @Override
+    public Result UpdateOrderById(Integer id, Integer productId, Integer userId, Integer warehouseId) {
+        Order order = new Order();
+        order.setId(id);
+        order.setProductid(productId);
+        order.setUserid(userId);
+        order.setWarehouseid(warehouseId);
+
+        updateOrderResponse updateOrderResponse = new updateOrderResponse(order);
+
+        Map data = new LinkedHashMap();
+        data.put("tip","成功修改订单");
+        data.put("order",updateOrderResponse);
+
+        return Result.ok(data);
+    }
+
+    @Override
+    public Result createOrder(Integer productId, Integer userId, Integer warehouseId) {
+        Order order = new Order();
+        order.setProductid(productId);
+        order.setUserid(userId);
+        order.setWarehouseid(warehouseId);
+
+        orderMapper.insertOrder(order);
+        Order dbOrder = orderMapper.selectOrderById(order.getId());
+
+        Map data = new LinkedHashMap();
+        data.put("tip","成功创建订单");
+        data.put("order",new updateOrderResponse(dbOrder));
+
+        return Result.ok(data);
+    }
+
+    @Override
+    public Result deleteOrderById(Integer id) {
+        Order order = orderMapper.selectOrderById(id);
+        orderMapper.deleteOrderById(id);
+
+        Map data = new LinkedHashMap();
+        data.put("tip","成功删除订单");
+        data.put("result",new updateOrderResponse(order));
 
         return Result.ok(data);
     }

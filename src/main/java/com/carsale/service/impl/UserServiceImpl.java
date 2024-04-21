@@ -10,11 +10,13 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.carsale.pojo.User;
 import com.carsale.response.autoLoginResponse;
 import com.carsale.response.loginResponse;
+import com.carsale.response.registerResponse;
 import com.carsale.service.UserService;
 import com.carsale.mapper.UserMapper;
 import com.carsale.utils.JwtHelper;
 import com.carsale.utils.Result;
 import com.carsale.utils.ResultCodeEnum;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -53,11 +55,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
         int rows = userMapper.insert(user);
         System.out.println("rows = " + rows);
+        User dbUser = userMapper.selectById(user.getId());
+        registerResponse registerResponse = new registerResponse(dbUser);
 
         Map data = new HashMap();
-        Map userInfo = new HashMap();
         data.put("tip","注册成功");
-        data.put("user",user);
+        data.put("user",registerResponse);
 
         return Result.ok(data);
     }
@@ -93,20 +96,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
-    public Result AutoLogin(String token) {
-        if (StringUtils.isEmpty(token) || jwtHelper.isExpiration(token)) {
-            return Result.build(null, ResultCodeEnum.Request_failed);
-        }
+    public Result AutoLogin(HttpServletRequest request) {
+        String token = request.getHeader("Authorization");
 
         Long userId = jwtHelper.getUserId(token);
-
-        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(User::getId,userId);
-        User user = userMapper.selectOne(queryWrapper);
+        User user = userMapper.selectById(userId);
+        autoLoginResponse autoLoginResponse = new autoLoginResponse(user);
 
         Map data = new HashMap();
         data.put("tip","自动登录成功");
-        data.put("user",new autoLoginResponse(user));
+        data.put("user",autoLoginResponse);
 
         return Result.ok(data);
     }

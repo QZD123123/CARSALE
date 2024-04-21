@@ -31,20 +31,20 @@ public class UserController {
     }
 
     @PatchMapping("{id}")
-    public Result updateUserById(@PathVariable Integer id, @RequestBody User user){
+    public Result updateUserById(@PathVariable Integer id, User user){
         Result result = userService.updateUserById(id,user);
         return result;
     }
 
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROOT','ADMIN','USER')")
     @PatchMapping("{id}/avatar")
-    public Result updateAvatar(@PathVariable Integer id, @RequestBody User user){
+    public Result updateAvatar(@PathVariable Integer id, User user){
         Result result = userService.updateAvatar(id,user);
         return result;
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROOT','ADMIN')")
     @DeleteMapping("{id}")
     public Result deleteUser(@PathVariable Integer id){
         Result result = userService.deleteUser(id);

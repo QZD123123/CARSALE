@@ -2,6 +2,7 @@ package com.carsale.mapper;
 
 import com.carsale.pojo.Order;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.carsale.pojo.User;
 import com.carsale.utils.Result;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,6 +22,34 @@ public interface OrderMapper extends BaseMapper<Order> {
 
     Long selectOrderCount();
     List<Order> selectOrderPage(@Param("page") Integer page, @Param("pageSize") Integer pageSize);
+
+    Order selectOrderById(@Param("orderId") Integer orderId);
+
+    void updateOrderById(@Param("TableOrder") Order TableOrder);
+
+    void insertOrder(@Param("TableOrder") Order TableOrder);
+
+    void deleteOrderById(@Param("id") Integer id);
+
+    Double selectIncome();
+
+    Integer sales();
+
+    Integer warehouses();
+
+    Integer users();
+
+    List<Integer> selectTopUserId();
+
+    List<String> selectTopUserName();
+
+    Double selectSalesByYearAndUserId(@Param("year") Integer year, @Param("id") Integer id);
+
+    List<Integer> selectTopCarId();
+
+    List<String> selectTopCarName();
+
+    Integer selectSalesByYearAndCarId(@Param("year") Integer year, @Param("id") Integer id);
 }
 
 

@@ -6,6 +6,7 @@ import com.carsale.service.UserService;
 import com.carsale.utils.JwtHelper;
 import com.carsale.utils.Result;
 import com.carsale.utils.ResultCodeEnum;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -24,21 +25,21 @@ public class AuthorizationController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("register")
-    public Result register(@RequestBody User user){
+    public Result register(User user){
         Result result = userService.register(user);
         return result;
     }
 
     @PostMapping("login")
-    public Result login(@RequestBody User user){
+    public Result login(User user){
         Result result = userService.login(user);
         System.out.println("result = " + result);
         return result;
     }
 
     @GetMapping("login")
-    public Result AutoLogin(@RequestHeader String Authorization){
-        Result result = userService.AutoLogin(Authorization);
+    public Result AutoLogin(HttpServletRequest request){
+        Result result = userService.AutoLogin(request);
         System.out.println("result = " + result);
         return result;
     }

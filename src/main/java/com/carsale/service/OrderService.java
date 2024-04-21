@@ -12,4 +12,13 @@ import com.carsale.utils.Result;
 public interface OrderService extends IService<Order> {
 
     Result orderPageSelect(Integer page, Integer pageSize);
+
+    Result selectOrderById(Integer id);
+
+
+    Result UpdateOrderById(Integer id, Integer productId, Integer userId, Integer warehouseId);
+
+    Result createOrder(Integer productId, Integer userId, Integer warehouseId);
+
+    Result deleteOrderById(Integer id);
 }
