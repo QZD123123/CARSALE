@@ -3,7 +3,10 @@ package com.carsale.controller;
 import com.carsale.pojo.User;
 import com.carsale.service.UserService;
 import com.carsale.utils.Result;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.websocket.server.PathParam;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.plugin.Intercepts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -11,15 +14,16 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
-@RequestMapping("user")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-
     @GetMapping("")
     public Result userPageSelect(Integer page, Integer pageSize){
+        System.out.println("page = " + "page");
+        System.out.println("pageSize = " + "pageSize");
         Result result = userService.userPageSelect(page, pageSize);
         return result;
     }

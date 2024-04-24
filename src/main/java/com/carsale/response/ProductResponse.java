@@ -12,6 +12,7 @@ public class ProductResponse {
     private String model;
     private Double price;
     private String introduce;
+    private String poster;
     private Integer sales;
 
     public ProductResponse(){}
@@ -22,6 +23,7 @@ public class ProductResponse {
         this.model = product.getModel();
         this.price = product.getPrice();
         this.introduce = product.getIntroduce();
+        this.poster = product.getPoster();
         this.sales = 0;
     }
 }

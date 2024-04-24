@@ -81,6 +81,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product>
             product.setModel((String) record.get("model"));
             product.setPrice((Double) record.get("price"));
             product.setIntroduce((String) record.get("introduce"));
+            product.setPoster((String) record.get("poster"));
 
             ProductResponse productResponse = new ProductResponse(product);
             productResponse.setSales(productMapper.saleOfCarById((Integer) record.get("id")));

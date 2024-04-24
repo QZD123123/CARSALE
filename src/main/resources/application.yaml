@@ -12,6 +12,12 @@ spring:
       username: root
       password: root
       driver-class-name: com.mysql.cj.jdbc.Driver
+  graphql:
+    cors:
+      allowed-origins: "*"
+      allowed-methods: "*"
+      allowed-headers: "*"
+      allow-credentials: true
 
 
 # mybatis-plus的配置
@@ -26,3 +32,4 @@ jwt:
   token:
     tokenExpiration: 120
     tokenSignKey: carsale123
+

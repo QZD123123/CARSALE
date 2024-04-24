@@ -17,14 +17,12 @@ import com.carsale.utils.JwtHelper;
 import com.carsale.utils.Result;
 import com.carsale.utils.ResultCodeEnum;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
 * @author ASUS
@@ -127,9 +125,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             user.setUsername((String) record.get("username"));
             user.setPhone((String) record.get("phone"));
             user.setRole((String) record.get("role"));
-
-            autoLoginResponse response = new autoLoginResponse(user);
-            list.add(response);
+            user.setAddress((String) record.get("address"));
+            user.setAvatar((String) record.get("avatar"));
+            user.setJoinedDate((Date) record.get("joinedDate"));
+//            autoLoginResponse autoLoginResponse = new autoLoginResponse(user);
+            list.add(user);
         }
 
         Map data = new HashMap();
