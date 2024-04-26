@@ -7,7 +7,10 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.carsale.mapper.OrderMapper;
+import com.carsale.pojo.Order;
 import com.carsale.pojo.User;
+import com.carsale.response.UserOrderResponse;
 import com.carsale.response.autoLoginResponse;
 import com.carsale.response.loginResponse;
 import com.carsale.response.registerResponse;
@@ -22,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -37,28 +41,58 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     private UserMapper userMapper;
 
     @Autowired
+    private OrderMapper orderMapper;
+
+    @Autowired
     private JwtHelper jwtHelper;
 
     @Override
-    public Result register(User user) {
-        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(User::getPhone,user.getPhone());
-        Long count = userMapper.selectCount(queryWrapper);
-        //手机号唯一
-        if (count > 0) {
-            return Result.build(null, ResultCodeEnum.request_syntaxerrors_or_invalidparameters);
-        }
+    public Result userOrder(String id) {
+        //指定用户总共售卖的订单数
+        Integer count = orderMapper.countOrderByUserId(id);
+        //指定用户总销售额
+        Double sales = orderMapper.salesOrderByUserId(id);
+        //所有用户的平均售卖的订单数
+        Integer average_count = orderMapper.AverageCountOrderByUserId();
+        //所有用户平均销售额
+        Double average_sales = orderMapper.AverageSalesOrderByUserId();
+        //指定用户订单信息
+        List<UserOrderResponse> orders = orderMapper.selectOrderByUserId(id);
 
-        //密码加密还没写
+
+        Map data = new LinkedHashMap();
+        data.put("count",count);
+        data.put("sales",sales);
+        data.put("average_count",average_count);
+        data.put("average_sales",average_sales);
+        data.put("source",orders);
+
+        return Result.ok(data);
+
+    }
+
+
+//    @Override
+//    public Result getAllUser() {
+//        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+//        List<User> users = userMapper.selectList(queryWrapper);
+//
+//        List data = new ArrayList();
+//        data.add(users);
+//
+//        return Result.ok(data);
+//    }
+
+    @Override
+    public Result register(User user) {
 
         int rows = userMapper.insert(user);
         System.out.println("rows = " + rows);
         User dbUser = userMapper.selectById(user.getId());
-        registerResponse registerResponse = new registerResponse(dbUser);
 
         Map data = new HashMap();
         data.put("tip","注册成功");
-        data.put("user",registerResponse);
+        data.put("user",dbUser);
 
         return Result.ok(data);
     }
@@ -82,9 +116,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             String token = jwtHelper.createToken(Long.valueOf(dbuser.getId()));
 
 
-            Map data = new HashMap();
+            Map data = new LinkedHashMap();
             data.put("tip","登陆成功");
-            data.put("user",new loginResponse(dbuser));
+            data.put("user",dbuser);
             data.put("token",token);
 
             return Result.ok(data);
@@ -99,11 +133,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
         Long userId = jwtHelper.getUserId(token);
         User user = userMapper.selectById(userId);
-        autoLoginResponse autoLoginResponse = new autoLoginResponse(user);
 
         Map data = new HashMap();
         data.put("tip","自动登录成功");
-        data.put("user",autoLoginResponse);
+        data.put("user",user);
 
         return Result.ok(data);
     }
@@ -115,6 +148,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         //分页
         IPage<Map<String, Object>> result = userMapper.selectMapsPage(mapPage,null);
         List<Map<String, Object>> records = result.getRecords(); // 查询结果列表
+        System.out.println("records = " + records);
         //count User 不导入queryWrapper
         //LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         Long count = userMapper.selectCount(null);
@@ -122,21 +156,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         List list = new ArrayList<>();
         for (Map<String, Object> record : records) {
             User user = new User();
+            user.setId((Integer) record.get("id"));
+            user.setAvatar((String) record.get("avatar"));
             user.setUsername((String) record.get("username"));
             user.setPhone((String) record.get("phone"));
-            user.setRole((String) record.get("role"));
+            user.setJoined_date((LocalDateTime) record.get("joined_date"));
             user.setAddress((String) record.get("address"));
-            user.setAvatar((String) record.get("avatar"));
-            user.setJoinedDate((Date) record.get("joinedDate"));
-//            autoLoginResponse autoLoginResponse = new autoLoginResponse(user);
+            user.setRole((String) record.get("role"));
             list.add(user);
         }
 
-        Map data = new HashMap();
+        Map data = new LinkedHashMap();
         data.put("tip","成功获取第"+page+"页共"+pageSize+"条数据");
-        data.put("userTotal",count);
-        data.put("pageTotal",(int)Math.ceil(count/pageSize));
         data.put("page",page);
+        data.put("count",pageSize);
+        data.put("pageTotal",(int)Math.ceil(count/pageSize));
+        data.put("userTotal",count);
         data.put("userList", list);
 
         return Result.ok(data);
@@ -151,7 +186,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
         Map data = new HashMap<>();
         data.put("tip","成功获取指定用户");
-        data.put("user",new loginResponse(user));
+        data.put("user",user);
 
         return Result.ok(data);
     }
@@ -163,13 +198,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         userMapper.updateById(user);
 
         //在数据库找出这个用户
-        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(User::getId,user.getId());
-        User selectOne = userMapper.selectOne(queryWrapper);
+//        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+//        queryWrapper.eq(User::getId,user.getId());
+//        User selectOne = userMapper.selectOne(queryWrapper);
 
         Map data = new HashMap<>();
         data.put("tip","成功更新用户信息");
-        data.put("user",new loginResponse(selectOne));
+//        data.put("user",new loginResponse(selectOne));
 
         return Result.ok(data);
     }
@@ -191,7 +226,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         queryWrapper.eq(User::getId,id);
         int i = userMapper.delete(queryWrapper);
 
-        Map data = new HashMap();
+        Map data = new LinkedHashMap();
 
         if(i==0){
             data.put("tip","删除用户失败");
@@ -202,6 +237,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
         return Result.ok(data);
     }
+
+    @Override
+    public Result checkPhone(String phone) {
+        User user = userMapper.checkPhone(phone);
+
+        if(user==null){
+            return Result.ok(false);
+        }
+        return Result.ok(true);
+    }
+
 }
 
 

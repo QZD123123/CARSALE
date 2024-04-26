@@ -11,13 +11,13 @@ import com.carsale.utils.Result;
 */
 public interface SupplierService extends IService<Supplier> {
 
-    Result createSupplier(String name, String phone, String company);
+    Result createSupplier(Supplier supplier);
 
     Result supplierPageSelect(Integer page, Integer pageSize);
 
     Result selectSupplierById(Integer id);
 
-    Result UpdateSupplierById(Integer id, String name, String phone, String company);
+    Result UpdateSupplierById(Integer id, Supplier supplier);
 
     Result deleteSupplierById(Integer id);
 }

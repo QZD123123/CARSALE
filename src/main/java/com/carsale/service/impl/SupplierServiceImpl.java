@@ -36,11 +36,8 @@ public class SupplierServiceImpl extends ServiceImpl<SupplierMapper, Supplier>
     private SupplyMapper supplyMapper;
 
     @Override
-    public Result createSupplier(String name, String phone, String company) {
-        Supplier supplier = new Supplier();
-        supplier.setName(name);
-        supplier.setPhone(phone);
-        supplier.setCompany(company);
+    public Result createSupplier(Supplier supplier) {
+
         int i = supplierMapper.insert(supplier);
 
         Map data = new LinkedHashMap();
@@ -94,14 +91,9 @@ public class SupplierServiceImpl extends ServiceImpl<SupplierMapper, Supplier>
     }
 
     @Override
-    public Result UpdateSupplierById(Integer id, String name, String phone, String company) {
+    public Result UpdateSupplierById(Integer id, Supplier supplier) {
 
-        Supplier supplier = new Supplier();
         supplier.setId(id);
-        supplier.setName(name);
-        supplier.setPhone(phone);
-        supplier.setCompany(company);
-
         supplierMapper.updateById(supplier);
 
         Map data = new LinkedHashMap();

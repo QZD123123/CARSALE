@@ -1,5 +1,6 @@
 package com.carsale.controller;
 
+import com.carsale.pojo.Product;
 import com.carsale.service.ProductService;
 import com.carsale.utils.Result;
 import org.apache.ibatis.annotations.Param;
@@ -17,8 +18,8 @@ public class ProductController {
 
     @PreAuthorize("hasAnyAuthority('USER','ADMIN','ROOT')")
     @PostMapping("")
-    public Result createProduct(@RequestBody String name, String model, Double price ,String introduce){
-        Result result = productService.createProduct(name,model,price,introduce);
+    public Result createProduct(@RequestBody Product product){
+        Result result = productService.createProduct(product);
         return result;
     }
 

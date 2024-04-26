@@ -1,5 +1,6 @@
 package com.carsale.controller;
 
+import com.carsale.pojo.Supplier;
 import com.carsale.service.SupplierService;
 import com.carsale.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,8 @@ public class SupplierController {
 
     @PreAuthorize("hasAnyAuthority('ROOT','ADMIN','USER')")
     @PostMapping("")
-    public Result createSupplier(@RequestBody String name, String phone, String company){
-        Result result = supplierService.createSupplier(name,phone,company);
+    public Result createSupplier(@RequestBody Supplier supplier){
+        Result result = supplierService.createSupplier(supplier);
         return result;
     }
 
@@ -38,8 +39,8 @@ public class SupplierController {
 
     @PreAuthorize("hasAnyAuthority('ROOT','ADMIN','USER')")
     @PatchMapping("{id}")
-    public Result UpdateSupplierById(@PathVariable Integer id, @RequestBody String name, String phone, String company){
-        Result result = supplierService.UpdateSupplierById(id,name,phone,company);
+    public Result UpdateSupplierById(@PathVariable Integer id, @RequestBody Supplier supplier){
+        Result result = supplierService.UpdateSupplierById(id,supplier);
         return result;
     }
 

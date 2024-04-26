@@ -1,5 +1,6 @@
 package com.carsale.controller;
 
+import com.carsale.pojo.Warehouse;
 import com.carsale.service.WarehouseService;
 import com.carsale.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,8 @@ public class WarehouseController {
 
     @PreAuthorize("hasAnyAuthority('ROOT','ADMIN','USER')")
     @PostMapping("")
-    public Result createWarehouse(@RequestBody String location){
-        Result result = warehouseService.createWarehouse(location);
+    public Result createWarehouse(@RequestBody Warehouse warehouse){
+        Result result = warehouseService.createWarehouse(warehouse);
         return result;
     }
 
@@ -38,8 +39,8 @@ public class WarehouseController {
 
     @PreAuthorize("hasAnyAuthority('ROOT','ADMIN','USER')")
     @PatchMapping("{id}")
-    public Result UpdateWarehouseById(@PathVariable Integer id, @RequestBody String location){
-        Result result = warehouseService.UpdateWarehouseById(id,location);
+    public Result UpdateWarehouseById(@PathVariable Integer id, @RequestBody Warehouse warehouse){
+        Result result = warehouseService.UpdateWarehouseById(id,warehouse);
         return result;
     }
 

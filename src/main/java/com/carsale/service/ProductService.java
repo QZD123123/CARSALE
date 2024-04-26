@@ -11,7 +11,7 @@ import com.carsale.utils.Result;
 */
 public interface ProductService extends IService<Product> {
 
-    Result createProduct(String name, String model, Double price, String introduce);
+    Result createProduct(Product product);
 
     Result productPageSelect(Integer page, Integer pageSize);
 

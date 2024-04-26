@@ -20,6 +20,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("{id}/order")
+    public Result userOrder(@PathVariable String id){
+        Result result = userService.userOrder(id);
+        return result;
+    }
+
     @GetMapping("")
     public Result userPageSelect(Integer page, Integer pageSize){
         System.out.println("page = " + "page");
@@ -27,6 +33,12 @@ public class UserController {
         Result result = userService.userPageSelect(page, pageSize);
         return result;
     }
+
+//    @GetMapping("")
+//    public Result getAllUser(){
+//        Result result = userService.getAllUser();
+//        return result;
+//    }
 
     @GetMapping("{id}")
     public Result selectUserById(@PathVariable Integer id){
@@ -52,6 +64,12 @@ public class UserController {
     @DeleteMapping("{id}")
     public Result deleteUser(@PathVariable Integer id){
         Result result = userService.deleteUser(id);
+        return result;
+    }
+
+    @GetMapping("phone/{phone}")
+    public Result checkPhone(@PathVariable String phone){
+        Result result = userService.checkPhone(phone);
         return result;
     }
 }

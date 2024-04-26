@@ -142,7 +142,7 @@
                 JOIN
             product p ON o.productId = p.id
         WHERE
-            YEAR(o.createtime) >= YEAR(CURDATE()) - 4
+            YEAR(o.createtime) >= YEAR(CURDATE()) - 9
         GROUP BY
             p.id
         ORDER BY
@@ -159,7 +159,24 @@
                 JOIN
             product p ON o.productId = p.id
         WHERE
-            YEAR(o.createtime) >= YEAR(CURDATE()) - 4
+            YEAR(o.createtime) >= YEAR(CURDATE()) - 9
+        GROUP BY
+            p.id
+        ORDER BY
+            ROUND(SUM(p.price),2) DESC
+            LIMIT
+            7;
+    </select>
+
+    <select id="selectTopCarModel" resultType="java.lang.String">
+        SELECT
+            p.`model`,p.id
+        FROM
+            `order` o
+                JOIN
+            product p ON o.productId = p.id
+        WHERE
+            YEAR(o.createtime) >= YEAR(CURDATE()) - 9
         GROUP BY
             p.id
         ORDER BY
@@ -173,6 +190,34 @@
         FROM `order` o
                  JOIN product p ON o.productId = p.id
         WHERE YEAR(o.createTime) = #{year} AND o.productId = #{id}
+    </select>
+
+    <select id="selectOrderByUserId" resultType="com.carsale.response.UserOrderResponse">
+        SELECT `order`.id ,product.`name`,product.model,warehouse.location,`order`.createtime
+        FROM `order`,product,warehouse,`user`
+        where `order`.productId=product.id and `order`.warehouseId=warehouse.id and `order`.userId=`user`.id AND `user`.id=#{userId}
+    </select>
+
+    <select id="countOrderByUserId" resultType="java.lang.Integer">
+        select count(*)
+        from `order`,`user`
+        where `order`.userId=`user`.id and `user`.id=#{userId}
+    </select>
+
+    <select id="salesOrderByUserId" resultType="java.lang.Double">
+        select round(sum(product.price),2)
+        from `order`,`user`,product
+        where `order`.userId=`user`.id and `order`.productId=product.id and `user`.id=#{userId}
+    </select>
+
+    <select id="AverageCountOrderByUserId" resultType="java.lang.Integer">
+        SELECT
+        round((SELECT COUNT(id) FROM `order`) / (SELECT COUNT(id) FROM `user`),0)
+    </select>
+
+    <select id="AverageSalesOrderByUserId" resultType="java.lang.Double">
+        SELECT
+        round((SELECT SUM(product.price) FROM `order`,product WHERE `order`.productId=product.id) / (SELECT COUNT(id) FROM `user`),0)
     </select>
 
 

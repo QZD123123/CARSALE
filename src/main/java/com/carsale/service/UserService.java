@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.carsale.utils.Result;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.ibatis.annotations.Param;
 
 /**
 * @author ASUS
@@ -30,5 +31,9 @@ public interface UserService extends IService<User> {
 
     Result deleteUser(Integer id);
 
+    Result userOrder(String id);
 
+    Result checkPhone(@Param("phone") String phone);
+
+//    Result getAllUser();
 }

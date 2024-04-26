@@ -18,6 +18,8 @@ public interface UserMapper extends BaseMapper<User> {
     User selectByPhone(String userPhone);
 
     User findByPhone(String phoneNumber);
+
+    User checkPhone(String phone);
 }
 
 

@@ -45,20 +45,22 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product>
     private WarehouseMapper warehouseMapper;
 
     @Override
-    public Result createProduct(String name, String model, Double price, String introduce) {
-        Product product = new Product();
-        product.setName(name);
-        product.setModel(model);
-        product.setPrice(price);
-        product.setIntroduce(introduce);
+    public Result createProduct(Product product) {
         int i = productMapper.insert(product);
+        LambdaQueryWrapper<Product> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Product::getName,product.getName())
+                .eq(Product::getModel,product.getModel())
+                .eq(Product::getPrice,product.getPrice())
+                .eq(Product::getIntroduce,product.getIntroduce())
+                .eq(Product::getPoster,product.getPoster());
+        Product dbProduct = productMapper.selectOne(queryWrapper);
         Map data = new HashMap();
         if (i == 0) {
             data.put("tip","创建产品失败");
             return Result.ok(requested_resource_no_modified);
         }else{
             data.put("tip","成功创建产品");
-            data.put("product",product);
+            data.put("product",dbProduct);
             return Result.ok(data);
         }
     }

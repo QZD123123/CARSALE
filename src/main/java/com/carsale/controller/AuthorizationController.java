@@ -20,7 +20,7 @@ public class AuthorizationController {
     private UserService userService;
 
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ROOT')")
     @PostMapping("register")
     public Result register(@RequestBody User user){
         Result result = userService.register(user);

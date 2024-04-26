@@ -11,13 +11,13 @@ import com.carsale.utils.Result;
 */
 public interface WarehouseService extends IService<Warehouse> {
 
-    Result createWarehouse(String location);
+    Result createWarehouse(Warehouse warehouse);
 
     Result warehousePageSelect(Integer page, Integer pageSize);
 
     Result selectWarehouseById(Integer id);
 
-    Result UpdateWarehouseById(Integer id, String location);
+    Result UpdateWarehouseById(Integer id, Warehouse warehouse);
 
     Result deleteWarehouseById(Integer id);
 

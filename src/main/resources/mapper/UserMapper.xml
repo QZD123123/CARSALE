@@ -12,7 +12,7 @@
             <result property="role" column="role" jdbcType="OTHER"/>
             <result property="address" column="address" jdbcType="VARCHAR"/>
             <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
-            <result property="joinedDate" column="joined_date" jdbcType="TIMESTAMP"/>
+            <result property="joined_date" column="joined_date" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -29,5 +29,12 @@
     <select id="findByPhone" resultType="com.carsale.pojo.User">
         select * from user where phone = #{username}
     </select>
+
+    <select id="checkPhone" resultType="com.carsale.pojo.User">
+        SELECT *
+        FROM `user`
+        where `user`.phone=#{phone}
+    </select>
+
 
 </mapper>

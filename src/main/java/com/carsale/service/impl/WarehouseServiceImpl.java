@@ -43,9 +43,7 @@ public class WarehouseServiceImpl extends ServiceImpl<WarehouseMapper, Warehouse
     private OrderMapper orderMapper;
 
     @Override
-    public Result createWarehouse(String location) {
-        Warehouse warehouse = new Warehouse();
-        warehouse.setLocation(location);
+    public Result createWarehouse(Warehouse warehouse) {
         warehouseMapper.insert(warehouse);
 
         Map data = new LinkedHashMap();
@@ -96,10 +94,8 @@ public class WarehouseServiceImpl extends ServiceImpl<WarehouseMapper, Warehouse
     }
 
     @Override
-    public Result UpdateWarehouseById(Integer id, String location) {
-        Warehouse warehouse = new Warehouse();
+    public Result UpdateWarehouseById(Integer id, Warehouse warehouse) {
         warehouse.setId(id);
-        warehouse.setLocation(location);
 
         warehouseMapper.updateById(warehouse);
 

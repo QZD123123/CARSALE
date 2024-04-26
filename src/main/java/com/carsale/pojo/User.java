@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -33,7 +34,7 @@ public class User implements Serializable, UserDetails {
 
     private String avatar;
 
-    private Date joinedDate;
+    private LocalDateTime joined_date;
 
     private static final long serialVersionUID = 1L;
 

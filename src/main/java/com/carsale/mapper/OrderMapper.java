@@ -3,6 +3,7 @@ package com.carsale.mapper;
 import com.carsale.pojo.Order;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.carsale.pojo.User;
+import com.carsale.response.UserOrderResponse;
 import com.carsale.utils.Result;
 import org.apache.ibatis.annotations.Param;
 
@@ -49,7 +50,20 @@ public interface OrderMapper extends BaseMapper<Order> {
 
     List<String> selectTopCarName();
 
+    List<String> selectTopCarModel();
+
     Integer selectSalesByYearAndCarId(@Param("year") Integer year, @Param("id") Integer id);
+
+
+    List<UserOrderResponse> selectOrderByUserId(@Param("userId") String userId);
+
+    Integer countOrderByUserId(@Param("userId") String userId);
+
+    Double salesOrderByUserId(@Param("userId") String userId);
+
+    Integer AverageCountOrderByUserId();
+
+    Double AverageSalesOrderByUserId();
 }
 
 
