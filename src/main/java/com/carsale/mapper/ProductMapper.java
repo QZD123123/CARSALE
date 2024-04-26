@@ -2,9 +2,12 @@ package com.carsale.mapper;
 
 import com.carsale.pojo.Product;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.carsale.response.ProductNameAndValue;
+import com.carsale.response.ProductYearAndSalesResponse;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
 * @author ASUS
@@ -23,6 +26,12 @@ public interface ProductMapper extends BaseMapper<Product> {
     String selectProductBrandById(@Param("productId") Integer productId);
 
     String selectProductModelById(@Param("productId") Integer productId);
+
+
+    List<ProductNameAndValue> selectProductNameAndValueById(@Param("productId") Integer productId);
+
+
+    List<ProductYearAndSalesResponse> selectYearAndSalesById(Integer id);
 }
 
 

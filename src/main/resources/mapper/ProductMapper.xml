@@ -47,5 +47,19 @@
         WHERE id = #{productId}
     </select>
 
+    <select id="selectProductNameAndValueById" resultType="com.carsale.response.ProductNameAndValue">
+        SELECT warehouse.location as name, inventory.quantity as value
+        FROM `inventory`,warehouse
+        WHERE inventory.warehouseId=warehouse.id and inventory.productId=#{productId}
+    </select>
+
+    <select id="selectYearAndSalesById" resultType="com.carsale.response.ProductYearAndSalesResponse">
+        SELECT YEAR(createtime) AS year, COUNT(*) AS salesCount
+        FROM `order`
+        WHERE productId = #{productId}
+        GROUP BY YEAR(createtime)
+        ORDER BY YEAR(createtime);
+    </select>
+
 
 </mapper>

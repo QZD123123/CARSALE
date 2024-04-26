@@ -8,7 +8,9 @@ import com.carsale.mapper.*;
 import com.carsale.pojo.Product;
 import com.carsale.pojo.User;
 import com.carsale.pojo.Warehouse;
+import com.carsale.response.ProductNameAndValue;
 import com.carsale.response.ProductResponse;
+import com.carsale.response.ProductYearAndSalesResponse;
 import com.carsale.response.countResponse;
 import com.carsale.service.ProductService;
 import com.carsale.utils.Result;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Year;
 import java.util.*;
 
 import static com.carsale.utils.ResultCodeEnum.requested_resource_no_modified;
@@ -104,12 +107,25 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product>
     @Override
     public Result selectProductById(Integer id) {
 
-        LambdaQueryWrapper<Product> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Product::getId,id);
-        Product product = productMapper.selectOne(queryWrapper);
+        Product product = productMapper.selectProductById(id);
+
+        List<ProductNameAndValue> productNameAndValues = productMapper.selectProductNameAndValueById(id);
+
+        List<ProductYearAndSalesResponse> productYearAndSalesResponse = productMapper.selectYearAndSalesById(id);
+
+        // 提取年份和销售数量到对应的列表中
+        List<String> gradientBarX = new ArrayList<>();
+        List<String> gradientBarY = new ArrayList<>();
+        for (ProductYearAndSalesResponse response : productYearAndSalesResponse) {
+            gradientBarX.add(response.getYear());
+            gradientBarY.add(response.getSalesCount());
+        }
 
         Map data = new HashMap();
         data.put("tip","成功获取指定产品");
+        data.put("gradientBarX",gradientBarX);
+        data.put("gradientBarY",gradientBarY);
+        data.put("pie",productNameAndValues);
         data.put("product",product);
 
         return Result.ok(data);
