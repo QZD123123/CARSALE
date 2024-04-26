@@ -20,8 +20,8 @@ public class updateOrderResponse {
 
     public updateOrderResponse(Order order) {
         this.id = order.getId();
-        this.productId = order.getProductid();
-        this.userId = order.getUserid();
-        this.warehouseId = order.getWarehouseid();
+        this.productId = order.getProductId();
+        this.userId = order.getUserId();
+        this.warehouseId = order.getWarehouseId();
     }
 }

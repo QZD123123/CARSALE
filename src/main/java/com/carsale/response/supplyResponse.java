@@ -8,8 +8,9 @@ import lombok.Data;
 @Data
 public class supplyResponse {
     private Integer id;
+    private String brand;
+    private String model;
     private Integer quantity;
-    private Supplier supplier;
-    private Product product;
-    private Warehouse warehouse;
+    private String supplier;
+    private String warehouse;
 }

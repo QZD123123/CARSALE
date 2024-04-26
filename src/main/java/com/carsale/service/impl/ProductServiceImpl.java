@@ -161,6 +161,14 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product>
         List<Warehouse> warehouse = warehouseMapper.selectWarehouseByProductId(id);
         return Result.ok(warehouse);
     }
+
+    @Override
+    public Result getAllProduct() {
+        List<Product> products = productMapper.getAllProduct();
+        return Result.ok(products);
+    }
+
+
 }
 
 

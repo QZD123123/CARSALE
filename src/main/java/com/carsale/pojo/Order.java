@@ -16,11 +16,11 @@ public class Order implements Serializable {
     @TableId
     private Integer id;
 
-    private Integer productid;
+    private Integer productId;
 
-    private Integer userid;
+    private Integer userId;
 
-    private Integer warehouseid;
+    private Integer warehouseId;
 
     private Date createtime;
 

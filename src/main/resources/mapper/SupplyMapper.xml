@@ -7,9 +7,9 @@
     <resultMap id="BaseResultMap" type="com.carsale.pojo.Supply">
             <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="quantity" column="quantity" jdbcType="INTEGER"/>
-            <result property="supplierid" column="supplierId" jdbcType="INTEGER"/>
-            <result property="productid" column="productId" jdbcType="INTEGER"/>
-            <result property="warehouseid" column="warehouseId" jdbcType="INTEGER"/>
+            <result property="supplierId" column="supplierId" jdbcType="INTEGER"/>
+            <result property="productId" column="productId" jdbcType="INTEGER"/>
+            <result property="warehouseId" column="warehouseId" jdbcType="INTEGER"/>
             <result property="createtime" column="createtime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
@@ -17,6 +17,11 @@
         id,quantity,supplierId,
         productId,warehouseId,createtime
     </sql>
+
+    <insert id="createSupply">
+        INSERT INTO supply (quantity, supplierId, productId, warehouseId, createtime)
+        VALUES (#{supply.quantity}, #{supply.supplierId}, #{supply.productId}, #{supply.warehouseId}, #{supply.createtime});
+    </insert>
 
     <delete id="deleteSupplyByProductId">
         delete
@@ -36,4 +41,8 @@
         where supply.warehouseId = #{warehouseId}
     </delete>
 
+    <select id="selectSupplyPage" resultMap="BaseResultMap">
+        SELECT * FROM `supply`
+                          LIMIT #{page}, #{pageSize};
+    </select>
 </mapper>

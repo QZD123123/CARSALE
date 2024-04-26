@@ -117,6 +117,12 @@ public class SupplierServiceImpl extends ServiceImpl<SupplierMapper, Supplier>
         data.put("tip","成功删除供应商");
         return Result.ok(data);
     }
+
+    @Override
+    public Result getAllSupplier(Integer page, Integer pageSize) {
+        List<Supplier> suppliers = supplierMapper.getAllSupplier();
+        return Result.ok(suppliers);
+    }
 }
 
 

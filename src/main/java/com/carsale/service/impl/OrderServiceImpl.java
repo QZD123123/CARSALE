@@ -54,9 +54,12 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order>
         for (Order record : records) {
             orderResponse orderResponse = new orderResponse();
             orderResponse.setId(record.getId());
-            orderResponse.setProduct(productMapper.selectProductById(record.getProductid()));
-            orderResponse.setUser(new autoLoginResponse(userMapper.selectById(record.getUserid())));
-            orderResponse.setWarehouse(warehouseMapper.selectWarehouseById(record.getWarehouseid()));
+            orderResponse.setCreatetime(record.getCreatetime());
+            orderResponse.setBrand(productMapper.selectProductBrandById(record.getProductId()));
+            orderResponse.setModel(productMapper.selectProductModelById(record.getProductId()));
+            orderResponse.setPhone(userMapper.selectUserPhoneById(record.getUserId()));
+            orderResponse.setUser(userMapper.selectUserNameById(record.getUserId()));
+            orderResponse.setWarehouse(warehouseMapper.selectLocationById(record.getWarehouseId()));
 
             list.add(orderResponse);
         }
@@ -74,31 +77,32 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order>
 
     @Override
     public Result selectOrderById(Integer id) {
-        Order order = orderMapper.selectOrderById(id);
-        orderResponse orderResponse = new orderResponse();
-
-        orderResponse.setId(order.getId());
-        orderResponse.setProduct(productMapper.selectById(order.getProductid()));
-        orderResponse.setUser(new autoLoginResponse(userMapper.selectById(order.getUserid())));
-        orderResponse.setWarehouse(warehouseMapper.selectWarehouseById(order.getWarehouseid()));
-
-        Map data = new LinkedHashMap();
-        data.put("tip","成功获取订单");
-        data.put("id",id);
-        data.put("product",orderResponse.getProduct());
-        data.put("user",orderResponse.getUser());
-        data.put("warehouse",orderResponse.getWarehouse());
-
-        return Result.ok(data);
+//        Order order = orderMapper.selectOrderById(id);
+//        orderResponse orderResponse = new orderResponse();
+//
+//        orderResponse.setId(order.getId());
+//        orderResponse.setProduct(productMapper.selectById(order.getProductid()));
+//        orderResponse.setUser(new autoLoginResponse(userMapper.selectById(order.getUserid())));
+//        orderResponse.setWarehouse(warehouseMapper.selectWarehouseById(order.getWarehouseid()));
+//
+//        Map data = new LinkedHashMap();
+//        data.put("tip","成功获取订单");
+//        data.put("id",id);
+//        data.put("product",orderResponse.getProduct());
+//        data.put("user",orderResponse.getUser());
+//        data.put("warehouse",orderResponse.getWarehouse());
+//
+//        return Result.ok(data);
+        return null;
     }
 
     @Override
     public Result UpdateOrderById(Integer id, Integer productId, Integer userId, Integer warehouseId) {
         Order order = new Order();
         order.setId(id);
-        order.setProductid(productId);
-        order.setUserid(userId);
-        order.setWarehouseid(warehouseId);
+        order.setProductId(productId);
+        order.setUserId(userId);
+        order.setWarehouseId(warehouseId);
 
         updateOrderResponse updateOrderResponse = new updateOrderResponse(order);
 
@@ -110,18 +114,14 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order>
     }
 
     @Override
-    public Result createOrder(Integer productId, Integer userId, Integer warehouseId) {
-        Order order = new Order();
-        order.setProductid(productId);
-        order.setUserid(userId);
-        order.setWarehouseid(warehouseId);
+    public Result createOrder(Order order) {
 
         orderMapper.insertOrder(order);
         Order dbOrder = orderMapper.selectOrderById(order.getId());
 
         Map data = new LinkedHashMap();
         data.put("tip","成功创建订单");
-        data.put("order",new updateOrderResponse(dbOrder));
+        data.put("order",dbOrder);
 
         return Result.ok(data);
     }

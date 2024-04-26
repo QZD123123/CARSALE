@@ -6,9 +6,9 @@
 
     <resultMap id="BaseResultMap" type="com.carsale.pojo.Order">
             <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="productid" column="productId" jdbcType="INTEGER"/>
-            <result property="userid" column="userId" jdbcType="INTEGER"/>
-            <result property="warehouseid" column="warehouseId" jdbcType="INTEGER"/>
+            <result property="productId" column="productId" jdbcType="INTEGER"/>
+            <result property="userId" column="userId" jdbcType="INTEGER"/>
+            <result property="warehouseId" column="warehouseId" jdbcType="INTEGER"/>
             <result property="createtime" column="createtime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
@@ -19,15 +19,15 @@
 
     <insert id="insertOrder" parameterType="com.carsale.pojo.Order" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `order` (productId, userId, warehouseId)
-        VALUES (#{TableOrder.productid}, #{TableOrder.userid}, #{TableOrder.warehouseid});
+        VALUES (#{TableOrder.productId}, #{TableOrder.userId}, #{TableOrder.warehouseId});
     </insert>
 
     <update id="updateOrderById" parameterType="com.carsale.pojo.Order">
         UPDATE `order`
-        SET productId = ${TableOrder.productid},
-            userId = ${TableOrder.userid},
-            warehouseId = ${TableOrder.warehouseid}
-        WHERE id = ${TableOrder.id}
+        SET productId = ${TableOrder.productId},
+            userId = ${TableOrder.userId},
+            warehouseId = ${TableOrder.warehouseId}
+        WHERE id = ${TableOrder.Id}
     </update>
 
 
@@ -219,6 +219,4 @@
         SELECT
         round((SELECT SUM(product.price) FROM `order`,product WHERE `order`.productId=product.id) / (SELECT COUNT(id) FROM `user`),0)
     </select>
-
-
 </mapper>

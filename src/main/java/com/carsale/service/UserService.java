@@ -35,5 +35,5 @@ public interface UserService extends IService<User> {
 
     Result checkPhone(@Param("phone") String phone);
 
-//    Result getAllUser();
+    Result getAllUser();
 }

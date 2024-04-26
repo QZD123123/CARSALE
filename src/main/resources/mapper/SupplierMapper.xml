@@ -21,4 +21,14 @@
         from supplier
         where supplier.id = #{supplierId}
     </select>
+
+    <select id="getAllSupplier" resultType="com.carsale.pojo.Supplier">
+        select * from supplier
+    </select>
+
+    <select id="selectCompanyById" resultType="java.lang.String">
+        SELECT supplier.company
+        FROM supplier
+        WHERE supplier.id=#{supplierId}
+    </select>
 </mapper>

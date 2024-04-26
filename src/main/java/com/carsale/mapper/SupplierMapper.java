@@ -4,6 +4,8 @@ import com.carsale.pojo.Supplier;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
 * @author ASUS
 * @description 针对表【supplier】的数据库操作Mapper
@@ -13,6 +15,10 @@ import org.apache.ibatis.annotations.Param;
 public interface SupplierMapper extends BaseMapper<Supplier> {
 
     Supplier selectSupplierById(@Param("supplierId") Integer supplierId);
+
+    List<Supplier> getAllSupplier();
+
+    String selectCompanyById(@Param("supplierId") Integer supplierId);
 }
 
 

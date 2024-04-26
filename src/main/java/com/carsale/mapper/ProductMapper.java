@@ -4,6 +4,8 @@ import com.carsale.pojo.Product;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
 * @author ASUS
 * @description 针对表【product】的数据库操作Mapper
@@ -15,6 +17,12 @@ public interface ProductMapper extends BaseMapper<Product> {
     Integer saleOfCarById(Integer id);
 
     Product selectProductById(@Param("productId") Integer productId);
+
+    List<Product> getAllProduct();
+
+    String selectProductBrandById(@Param("productId") Integer productId);
+
+    String selectProductModelById(@Param("productId") Integer productId);
 }
 
 

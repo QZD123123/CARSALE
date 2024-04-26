@@ -26,8 +26,15 @@ public class SupplierController {
     @PreAuthorize("hasAnyAuthority('ROOT','ADMIN','USER')")
     @GetMapping("")
     public Result supplierPageSelect(Integer page, Integer pageSize){
-        Result result = supplierService.supplierPageSelect(page,pageSize);
-        return result;
+
+        if (page == null && pageSize == null) {
+            Result result = supplierService.getAllSupplier(page,pageSize);
+            return result;
+        }
+        else {
+            Result result = supplierService.supplierPageSelect(page,pageSize);
+            return result;
+        }
     }
 
     @PreAuthorize("hasAnyAuthority('ROOT','ADMIN','USER')")

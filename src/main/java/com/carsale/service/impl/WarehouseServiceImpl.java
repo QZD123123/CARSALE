@@ -130,6 +130,12 @@ public class WarehouseServiceImpl extends ServiceImpl<WarehouseMapper, Warehouse
 
         return Result.ok(list);
     }
+
+    @Override
+    public Result getAllWarehouse() {
+        List<Warehouse> warehouses = warehouseMapper.getAllWarehouse();
+        return Result.ok(warehouses);
+    }
 }
 
 

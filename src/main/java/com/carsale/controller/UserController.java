@@ -28,17 +28,17 @@ public class UserController {
 
     @GetMapping("")
     public Result userPageSelect(Integer page, Integer pageSize){
-        System.out.println("page = " + "page");
-        System.out.println("pageSize = " + "pageSize");
-        Result result = userService.userPageSelect(page, pageSize);
-        return result;
+        System.out.println("page = " + page);
+        System.out.println("pageSize = " + pageSize);
+        if (page == null && pageSize == null) {
+            Result result = userService.getAllUser();
+            return result;
+        }
+        else {
+            Result result = userService.userPageSelect(page, pageSize);
+            return result;
+        }
     }
-
-//    @GetMapping("")
-//    public Result getAllUser(){
-//        Result result = userService.getAllUser();
-//        return result;
-//    }
 
     @GetMapping("{id}")
     public Result selectUserById(@PathVariable Integer id){

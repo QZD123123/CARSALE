@@ -22,4 +22,6 @@ public interface ProductService extends IService<Product> {
     Result deleteProductById(Integer id);
 
     Result selectWarehouseByProductId(Integer id);
+
+    Result getAllProduct();
 }

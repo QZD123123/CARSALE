@@ -11,7 +11,7 @@ import com.carsale.utils.Result;
 */
 public interface SupplyService extends IService<Supply> {
 
-    Result createSupply(Integer quantity, Integer supplierId, Integer productId, Integer warehouseId);
+    Result createSupply(Supply supply);
 
     Result supplyPageSelect(Integer page, Integer pageSize);
 

@@ -40,8 +40,8 @@ public class OrderController {
 
     @PreAuthorize("hasAnyAuthority('ROOT','ADMIN','USER')")
     @PostMapping("")
-    public Result createOrder(@RequestBody Integer productId, Integer userId, Integer warehouseId){
-        Result result = orderService.createOrder(productId,userId,warehouseId);
+    public Result createOrder(@RequestBody Order order){
+        Result result = orderService.createOrder(order);
         return result;
     }
 

@@ -22,4 +22,6 @@ public interface WarehouseService extends IService<Warehouse> {
     Result deleteWarehouseById(Integer id);
 
     Result selectWarehouseAndInventoryById(Integer id);
+
+    Result getAllWarehouse();
 }

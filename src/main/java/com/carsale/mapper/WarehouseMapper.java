@@ -20,6 +20,10 @@ public interface WarehouseMapper extends BaseMapper<Warehouse> {
     List<Product> selectWarehouseAndInventoryById(@Param("warehouseId") Integer warehouseId);
 
     Warehouse selectWarehouseById(@Param("warehouseId") Integer warehouseId);
+
+    List<Warehouse> getAllWarehouse();
+
+    String selectLocationById(@Param("warehouseId") Integer warehouseId);
 }
 
 

@@ -24,8 +24,8 @@ public class deleteSupplyResponse {
     public deleteSupplyResponse(Supply supply) {
         this.id = supply.getId();
         this.quantity = supply.getQuantity();
-        this.supplierId = supply.getSupplierid();
-        this.productId = supply.getProductid();
-        this.warehouseId = supply.getWarehouseid();
+        this.supplierId = supply.getSupplierId();
+        this.productId = supply.getProductId();
+        this.warehouseId = supply.getWarehouseId();
     }
 }

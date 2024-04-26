@@ -1,8 +1,11 @@
 package com.carsale.mapper;
 
+import com.carsale.pojo.Order;
 import com.carsale.pojo.Supply;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
 * @author ASUS
@@ -17,6 +20,10 @@ public interface SupplyMapper extends BaseMapper<Supply> {
     void deleteSupplyBySupplierId(@Param("supplierId") Integer supplierId);
 
     void deleteSupplyByWarehouseId(@Param("warehouseId") Integer warehouseId);
+
+    List<Supply> selectSupplyPage(@Param("page") Integer page, @Param("pageSize") Integer pageSize);
+
+    void createSupply(@Param("supply") Supply supply);
 }
 
 

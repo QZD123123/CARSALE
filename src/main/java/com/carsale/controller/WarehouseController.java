@@ -26,8 +26,14 @@ public class WarehouseController {
     @PreAuthorize("hasAnyAuthority('ROOT','ADMIN','USER')")
     @GetMapping("")
     public Result warehousePageSelect(Integer page, Integer pageSize){
-        Result result = warehouseService.warehousePageSelect(page,pageSize);
-        return result;
+
+        if (page == null && pageSize == null) {
+            Result result = warehouseService.getAllWarehouse();
+            return result;
+        }else {
+            Result result = warehouseService.warehousePageSelect(page,pageSize);
+            return result;
+        }
     }
 
     @PreAuthorize("hasAnyAuthority('ROOT','ADMIN','USER')")

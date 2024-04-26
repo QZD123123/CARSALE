@@ -36,5 +36,21 @@
         where `user`.phone=#{phone}
     </select>
 
+    <select id="getAllUser" resultType="com.carsale.pojo.User">
+        SELECT * FROM `user`
+    </select>
+
+    <select id="selectUserPhoneById" resultType="java.lang.String">
+        SELECT `user`.phone
+        FROM `user`
+        WHERE `user`.id=#{userId}
+    </select>
+
+    <select id="selectUserNameById" resultType="java.lang.String">
+        SELECT `user`.username
+        FROM `user`
+        WHERE `user`.id=#{userId}
+    </select>
+
 
 </mapper>

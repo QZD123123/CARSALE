@@ -31,4 +31,21 @@
         where product.id = #{productId}
     </select>
 
+    <select id="getAllProduct" resultType="com.carsale.pojo.Product">
+        select * from product
+    </select>
+
+    <select id="selectProductBrandById" resultType="java.lang.String">
+        SELECT product.`name`
+        FROM product
+        WHERE id = #{productId}
+    </select>
+
+    <select id="selectProductModelById" resultType="java.lang.String">
+        SELECT product.`model`
+        FROM product
+        WHERE id = #{productId}
+    </select>
+
+
 </mapper>

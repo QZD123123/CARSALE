@@ -17,8 +17,8 @@ public class SupplyController {
 
     @PreAuthorize("hasAnyAuthority('ROOT','ADMIN','USER')")
     @PostMapping("")
-    public Result createSupply(@RequestBody Integer quantity, Integer supplierId, Integer productId, Integer warehouseId){
-        Result result = supplyService.createSupply(quantity,supplierId,productId,warehouseId);
+    public Result createSupply(@RequestBody Supply supply){
+        Result result = supplyService.createSupply(supply);
         return result;
     }
 

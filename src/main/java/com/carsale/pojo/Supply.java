@@ -16,11 +16,11 @@ public class Supply implements Serializable {
 
     private Integer quantity;
 
-    private Integer supplierid;
+    private Integer supplierId;
 
-    private Integer productid;
+    private Integer productId;
 
-    private Integer warehouseid;
+    private Integer warehouseId;
 
     private Date createtime;
 

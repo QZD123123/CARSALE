@@ -34,4 +34,14 @@
         from warehouse
         where warehouse.id = #{warehouseId}
     </select>
+
+    <select id="getAllWarehouse" resultType="com.carsale.pojo.Warehouse">
+        select * from warehouse
+    </select>
+
+    <select id="selectLocationById" resultType="java.lang.String">
+        SELECT warehouse.location
+        FROM warehouse
+        WHERE warehouse.id=#{warehouseId}
+    </select>
 </mapper>

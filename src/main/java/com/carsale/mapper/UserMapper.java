@@ -20,6 +20,13 @@ public interface UserMapper extends BaseMapper<User> {
     User findByPhone(String phoneNumber);
 
     User checkPhone(String phone);
+
+
+    List<User> getAllUser();
+
+    String selectUserPhoneById(@Param("userId") Integer userId);
+
+    String selectUserNameById(@Param("userId")Integer userId);
 }
 
 

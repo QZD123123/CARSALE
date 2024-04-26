@@ -18,7 +18,7 @@ public interface OrderService extends IService<Order> {
 
     Result UpdateOrderById(Integer id, Integer productId, Integer userId, Integer warehouseId);
 
-    Result createOrder(Integer productId, Integer userId, Integer warehouseId);
+    Result createOrder(Order order);
 
     Result deleteOrderById(Integer id);
 }

@@ -72,17 +72,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
 
-//    @Override
-//    public Result getAllUser() {
-//        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
-//        List<User> users = userMapper.selectList(queryWrapper);
-//
-//        List data = new ArrayList();
-//        data.add(users);
-//
-//        return Result.ok(data);
-//    }
-
     @Override
     public Result register(User user) {
 
@@ -246,6 +235,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             return Result.ok(false);
         }
         return Result.ok(true);
+    }
+
+    @Override
+    public Result getAllUser() {
+        List<User> users = userMapper.getAllUser();
+
+        return Result.ok(users);
     }
 
 }

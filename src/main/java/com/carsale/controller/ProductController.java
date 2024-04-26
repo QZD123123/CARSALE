@@ -26,8 +26,14 @@ public class ProductController {
     @PreAuthorize("hasAnyAuthority('USER','ADMIN','ROOT')")
     @GetMapping("")
     public Result productPageSelect(Integer page, Integer pageSize){
-        Result result = productService.productPageSelect(page,pageSize);
-        return result;
+
+        if (page == null && pageSize == null) {
+            Result result = productService.getAllProduct();
+            return result;
+        }else {
+            Result result = productService.productPageSelect(page,pageSize);
+            return result;
+        }
     }
 
     @PreAuthorize("hasAnyAuthority('USER','ADMIN','ROOT')")
