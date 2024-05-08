@@ -20,6 +20,13 @@
         phone,role,address,
         avatar,joined_date
     </sql>
+
+    <update id="updatePasswordByUserId">
+        UPDATE `user`
+        SET `password` = #{password}
+        WHERE id = #{userId};
+    </update>
+
     <select id="selectByPhone" resultType="com.carsale.pojo.User">
         select id,username,phone,role
         from user
@@ -48,6 +55,12 @@
 
     <select id="selectUserNameById" resultType="java.lang.String">
         SELECT `user`.username
+        FROM `user`
+        WHERE `user`.id=#{userId}
+    </select>
+
+    <select id="selectUserPasswordById" resultType="java.lang.String">
+        SELECT `user`.`password`
         FROM `user`
         WHERE `user`.id=#{userId}
     </select>

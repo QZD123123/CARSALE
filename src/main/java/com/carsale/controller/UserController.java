@@ -1,6 +1,7 @@
 package com.carsale.controller;
 
 import com.carsale.pojo.User;
+import com.carsale.response.ChangePassword;
 import com.carsale.service.UserService;
 import com.carsale.utils.Result;
 import jakarta.servlet.http.HttpServletResponse;
@@ -72,4 +73,11 @@ public class UserController {
         Result result = userService.checkPhone(phone);
         return result;
     }
+
+    @PatchMapping("{id}/password")
+    public Result updatePassword(@PathVariable String id, @RequestBody ChangePassword changePassword){
+        Result result = userService.updatePassword(id,changePassword);
+        return result;
+    }
+
 }

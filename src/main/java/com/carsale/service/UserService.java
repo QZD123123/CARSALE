@@ -2,6 +2,7 @@ package com.carsale.service;
 
 import com.carsale.pojo.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.carsale.response.ChangePassword;
 import com.carsale.utils.Result;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -36,4 +37,6 @@ public interface UserService extends IService<User> {
     Result checkPhone(@Param("phone") String phone);
 
     Result getAllUser();
+
+    Result updatePassword(String id, ChangePassword changePassword);
 }

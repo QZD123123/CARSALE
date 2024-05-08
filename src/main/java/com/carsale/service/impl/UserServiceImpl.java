@@ -10,10 +10,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.carsale.mapper.OrderMapper;
 import com.carsale.pojo.Order;
 import com.carsale.pojo.User;
-import com.carsale.response.UserOrderResponse;
-import com.carsale.response.autoLoginResponse;
-import com.carsale.response.loginResponse;
-import com.carsale.response.registerResponse;
+import com.carsale.response.*;
 import com.carsale.service.UserService;
 import com.carsale.mapper.UserMapper;
 import com.carsale.utils.JwtHelper;
@@ -244,6 +241,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         return Result.ok(users);
     }
 
+    @Override
+    public Result updatePassword(String id, ChangePassword changePassword) {
+        Map data = new HashMap();
+
+        String dbPassword = userMapper.selectUserPasswordById(id);
+        if(!changePassword.getOriginalPassword().equals(dbPassword)){
+            data.put("success",false);
+            data.put("message","原密码错误");
+        }else {
+            userMapper.updatePasswordByUserId(id,changePassword.getPasswordConfirmed());
+            data.put("success",true);
+            data.put("tip","成功修改密码");
+        }
+        return Result.ok(data);
+    }
 }
 
 
