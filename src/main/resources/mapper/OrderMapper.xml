@@ -50,6 +50,10 @@
         where `order`.id = #{id}
     </delete>
 
+    <delete id="deleteOrderByUserId">
+        DELETE FROM `order` WHERE `order`.userId=#{userId};
+    </delete>
+
     <!-- 获取订单总数 -->
     <select id="selectOrderCount" resultType="java.lang.Long">
         SELECT COUNT(*) FROM `order`;
@@ -218,5 +222,29 @@
     <select id="AverageSalesOrderByUserId" resultType="java.lang.Double">
         SELECT
         round((SELECT SUM(product.price) FROM `order`,product WHERE `order`.productId=product.id) / (SELECT COUNT(id) FROM `user`),0)
+    </select>
+
+    <select id="selectTopUserNameAndUserId" resultType="com.carsale.response.UsernameAndUserIdResponse">
+        SELECT
+            results.id,
+            results.username
+        FROM
+            (SELECT
+                 u.id,
+                 u.username
+             FROM
+                 `order` o
+                     JOIN
+                 user u ON o.userId = u.id
+                     JOIN
+                 product p ON o.productId = p.id
+             WHERE
+                 YEAR(o.createtime) >= YEAR(CURDATE()) - 4
+             GROUP BY
+                 u.id, u.username
+             ORDER BY
+                 ROUND(SUM(p.price), 2) DESC
+                 LIMIT
+                 7) AS results;
     </select>
 </mapper>

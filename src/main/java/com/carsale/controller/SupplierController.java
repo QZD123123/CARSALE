@@ -53,7 +53,7 @@ public class SupplierController {
 
     @PreAuthorize("hasAnyAuthority('USER','ADMIN','ROOT')")
     @DeleteMapping("{id}")
-    public Result deleteProductById(@PathVariable Integer id){
+    public Result deleteSupplierById(@PathVariable Integer id){
         Result result = supplierService.deleteSupplierById(id);
         return result;
     }

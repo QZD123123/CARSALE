@@ -208,6 +208,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Override
     public Result deleteUser(Integer id) {
+        orderMapper.deleteOrderByUserId(id);
+
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(User::getId,id);
         int i = userMapper.delete(queryWrapper);

@@ -4,6 +4,7 @@ import com.carsale.pojo.Order;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.carsale.pojo.User;
 import com.carsale.response.UserOrderResponse;
+import com.carsale.response.UsernameAndUserIdResponse;
 import com.carsale.utils.Result;
 import org.apache.ibatis.annotations.Param;
 
@@ -64,6 +65,10 @@ public interface OrderMapper extends BaseMapper<Order> {
     Integer AverageCountOrderByUserId();
 
     Double AverageSalesOrderByUserId();
+
+    void deleteOrderByUserId(@Param("userId") Integer userId);
+
+    List<UsernameAndUserIdResponse> selectTopUserNameAndUserId();
 }
 
 

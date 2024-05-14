@@ -107,7 +107,7 @@ public class SupplierServiceImpl extends ServiceImpl<SupplierMapper, Supplier>
     @Transactional
     public Result deleteSupplierById(Integer id) {
         //1.减去inventory库存表
-        inventoryMapper.updateInventoryBySupplierId(id);
+//        inventoryMapper.updateInventoryBySupplierId(id);
         //2.删去供应表中的记录
         supplyMapper.deleteSupplyBySupplierId(id);
         //3.删除供应商

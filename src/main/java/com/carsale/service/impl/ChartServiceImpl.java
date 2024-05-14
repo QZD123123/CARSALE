@@ -2,6 +2,7 @@ package com.carsale.service.impl;
 
 import com.carsale.mapper.OrderMapper;
 import com.carsale.pojo.User;
+import com.carsale.response.UsernameAndUserIdResponse;
 import com.carsale.service.ChartService;
 import com.carsale.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.time.Year;
+import java.util.stream.Collectors;
 
 @Service
 public class ChartServiceImpl implements ChartService {
@@ -65,8 +67,18 @@ public class ChartServiceImpl implements ChartService {
 
     @Override
     public Result user() {
-        List<Integer> userId = orderMapper.selectTopUserId();
-        List<String> userName = orderMapper.selectTopUserName();
+//        List<Integer> userId = orderMapper.selectTopUserId();
+//        List<String> userName = orderMapper.selectTopUserName();
+        List<UsernameAndUserIdResponse> usernameAndUserId = orderMapper.selectTopUserNameAndUserId();
+
+        List<Integer> userId = usernameAndUserId.stream()
+                .map(UsernameAndUserIdResponse::getId)
+                .collect(Collectors.toList());
+
+        List<String> userName = usernameAndUserId.stream()
+                .map(UsernameAndUserIdResponse::getUsername)
+                .collect(Collectors.toList());
+
 
         int currentYear = Year.now().getValue();
         List<Integer> years = new ArrayList<>();
