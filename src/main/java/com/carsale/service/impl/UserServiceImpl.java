@@ -85,6 +85,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Override
     public Result login(User user) {
+        Map data = new LinkedHashMap();
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(User::getPhone,user.getPhone());
         //根据手机号，在数据库找出对应的账号
@@ -92,7 +93,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
         //数据库中没有这个手机号----没注册过
         if (dbuser == null) {
-            return Result.build(null,ResultCodeEnum.no_Resource);
+            data.put("tip","手机号与密码不匹配");
+            return Result.build(data,ResultCodeEnum.no_Resource);
         }
 
         System.out.println(!StringUtils.isEmpty(user.getPassword()));
@@ -102,15 +104,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             String token = jwtHelper.createToken(Long.valueOf(dbuser.getId()));
 
 
-            Map data = new LinkedHashMap();
             data.put("tip","登陆成功");
             data.put("user",dbuser);
             data.put("token",token);
 
             return Result.ok(data);
         }
-
-        return Result.build(null,ResultCodeEnum.Request_failed);
+        data.put("tip","手机号与密码不匹配");
+        return Result.build(data,ResultCodeEnum.Request_failed);
     }
 
     @Override
